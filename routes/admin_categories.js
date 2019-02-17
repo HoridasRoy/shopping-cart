@@ -80,7 +80,7 @@ router.post('/add-category', function(req, res){
 router.get('/edit-category/:id', function(req, res){
     
     Category.findById(req.params.id,function(err, category){
-        //console.log(page);
+        //console.log(req.params.id);
         
         if(err){
             return console.log(err);
@@ -137,10 +137,10 @@ router.post('/edit-category/:id', function(req, res){
                     id:id
                 });
             }else{
-                category.findById(id, function(err, category){
+                Category.findById(id, function(err, category){
 
                     if(err) return console.log(err);
-                    console.log(id);
+                    //console.log(id);
                     
                     
                     category.title= title,
@@ -163,6 +163,19 @@ router.post('/edit-category/:id', function(req, res){
         
     }
    
+});
+
+router.get('/delete-category/:id', function(req, res){
+    Category.findByIdAndRemove(req.params.id, function(err) {
+        if(err){
+            return console.log(err);
+            
+        }
+        req.flash('success', 'category deleted.');
+        res.redirect('/admin/categories');
+
+    });
+
 });
 
 module.exports = router;

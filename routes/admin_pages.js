@@ -107,9 +107,9 @@ router.get('/reorder-page', function(req, res){
     }
     
 });
-router.get('/edit-page/:slug', function(req, res){
+router.get('/edit-page/:id', function(req, res){
     
-    Page.findOne({slug: req.params.slug},function(err, page){
+    Page.findById(req.params.id,function(err, page){
         //console.log(page);
         
         if(err){
@@ -134,7 +134,7 @@ router.get('/edit-page/:slug', function(req, res){
 
     
 });
-router.post('/edit-page/:slug', function(req, res){
+router.post('/edit-page/:id', function(req, res){
     
     req.checkBody('title', 'Title must have a value').notEmpty();
     req.checkBody('content', 'Content must have a value').notEmpty();
@@ -145,7 +145,7 @@ router.post('/edit-page/:slug', function(req, res){
     var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
     if (slug =="" )slug =title.replace(/\s+/g, '-').toLowerCase();
     var content = req.body.content;
-    var id = req.body.id;
+    var id = req.params.id;
     //console.log(content);
     
 
